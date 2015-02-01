@@ -12,8 +12,7 @@ namespace Maze
 {
     public partial class Maze : Form
     {
-        //params to generate a maze
-        #region
+        #region params to generate a maze
         private static int N = 17;//scale of maze
         private bool[,] map = new bool[N * N, 5];//logic map of maze
         private bool[,] choice = new bool[N * N, 5];// ways for a unit to choose
@@ -23,8 +22,7 @@ namespace Maze
         private int seedLatch = -1;//if you want to recover from a damaged maze
         #endregion
 
-        //params to explore a maze
-        #region
+        #region params to explore a maze
         private Point[,] path = new Point[N, N];//the key to the maze
         private Stack<int> rStack = new Stack<int> { };//the stack to record the explored units
         #endregion
@@ -34,7 +32,8 @@ namespace Maze
             InitializeComponent();
         }
 
-        private void generate(object sender, EventArgs e)//alg. to generate the maze 
+        //alg. to generate the maze
+        private void generate(object sender, EventArgs e)
         {
             //initialize
             #region
@@ -78,19 +77,19 @@ namespace Maze
                             switch (i)
                             {
                                 case 1:
-                                    map[now + 1, 3]  = true;
+                                    map[now + 1, 3] = true;
                                     now = now + 1;
                                     break;
                                 case 2:
-                                    map[now + N, 4]  = true;
+                                    map[now + N, 4] = true;
                                     now = now + N;
                                     break;
                                 case 3:
-                                    map[now - 1, 1]  = true;
+                                    map[now - 1, 1] = true;
                                     now = now - 1;
                                     break;
                                 case 4:
-                                    map[now - N, 2]  = true;
+                                    map[now - N, 2] = true;
                                     now = now - N;
                                     break;
                                 default: break;
@@ -141,6 +140,8 @@ namespace Maze
             button3.Enabled = true;
             seed = -1;
         }
+
+        //to judge which way can the unit now to explore
         private int adjacent(int now)
         {
             int count = 0;
@@ -169,41 +170,15 @@ namespace Maze
             }
             else choice[now, 4] = false;
             return count;
-        }//to judge which way can the unit now to explore
+        }
 
-        private void run(object sender, EventArgs e)//alg. to explore the maze
+        //alg. to explore the maze
+        private void run(object sender, EventArgs e)
         {
             rStack.Clear();
             rStack.Push(-1);//a stupid way to solve the problem at the beginning of the 
-                            //recursion but I just don't have any other way at all!
+            //recursion but I just don't have any other way at all!
             explore(0);
-
-            //GDI engine: drawing the key to the maze
-            #region
-            Graphics g = this.CreateGraphics();
-            for (int i = 0; i < N; i++)
-                for (int j = 0; j < N; j++)
-                {
-                    path[i, j] = new Point(j * 40 + 170, i * 40 + 60);
-                }
-            Pen p = new Pen(Color.Red, 5);
-            Point pre = path[N - 1, N - 1];
-            rStack.Pop();
-            Point post;
-            int next = 0;
-            int x = 0, y = 0;
-            while ((next = rStack.Peek()) != -1)
-            {
-                rStack.Pop();
-                x = next / N;
-                y = next % N;
-                post = path[x, y];
-                g.DrawLine(p, pre, post);
-                pre = post;
-            }
-            g.DrawLine(p, path[0, 0], new Point(170, 40));
-            g.DrawLine(p, path[N - 1, N - 1], new Point((N - 1) * 40 + 170, (N - 1) * 40 + 80));
-            #endregion
         }
         private bool explore(int stackTop)
         {
@@ -253,6 +228,34 @@ namespace Maze
                 rStack.Push(stackTop);
 
             return true;
+        }
+
+        //GDI engine: drawing the key to the maze
+        private void DrawKey()
+        {
+            Graphics g = this.CreateGraphics();
+            for (int i = 0; i < N; i++)
+                for (int j = 0; j < N; j++)
+                {
+                    path[i, j] = new Point(j * 40 + 170, i * 40 + 60);
+                }
+            Pen p = new Pen(Color.Red, 5);
+            Point pre = path[N - 1, N - 1];
+            rStack.Pop();
+            Point post;
+            int next = 0;
+            int x = 0, y = 0;
+            while ((next = rStack.Peek()) != -1)
+            {
+                rStack.Pop();
+                x = next / N;
+                y = next % N;
+                post = path[x, y];
+                g.DrawLine(p, pre, post);
+                pre = post;
+            }
+            g.DrawLine(p, path[0, 0], new Point(170, 40));
+            g.DrawLine(p, path[N - 1, N - 1], new Point((N - 1) * 40 + 170, (N - 1) * 40 + 80));
         }
 
         private void recovery(object sender, EventArgs e)
