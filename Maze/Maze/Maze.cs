@@ -35,8 +35,7 @@ namespace Maze
         //alg. to generate the maze
         private void generate(object sender, EventArgs e)
         {
-            //initialize
-            #region
+            #region initialize
             for (int i = 0; i < N * N; i++)
                 for (int j = 0; j < 5; j++)
                 {
@@ -61,8 +60,7 @@ namespace Maze
             int choiceCount = 0;
             #endregion
 
-            //the main part of the algorithm
-            #region
+            #region the main part of the algorithm
             while (gStack.Count > 0)
             {
                 if ((choiceCount = adjacent(now)) > 0)//the unit now has adjacent units to be explored
@@ -108,8 +106,7 @@ namespace Maze
             }
             #endregion
 
-            //GDI engine: drawing the maze
-            #region
+            #region GDI engine: drawing the maze
             Graphics g = this.CreateGraphics();
             Pen p = new Pen(Color.Black, 3);
             g.Clear(Color.White);
@@ -141,7 +138,7 @@ namespace Maze
             seed = -1;
         }
 
-        //to judge which way can the unit now to explore
+        //to judge how many ways can the unit now to explore
         private int adjacent(int now)
         {
             int count = 0;
@@ -173,7 +170,7 @@ namespace Maze
         }
 
         //alg. to explore the maze
-        private void run(object sender, EventArgs e)
+        private void DFS(object sender, EventArgs e)
         {
             rStack.Clear();
             rStack.Push(-1);//a stupid way to solve the problem at the beginning of the 
@@ -228,6 +225,16 @@ namespace Maze
                 rStack.Push(stackTop);
 
             return true;
+        }
+
+        private void BFS(object sender, EventArgs e)
+        {
+
+        }
+
+        private void A_Star(object sender, EventArgs e)
+        {
+
         }
 
         //GDI engine: drawing the key to the maze
