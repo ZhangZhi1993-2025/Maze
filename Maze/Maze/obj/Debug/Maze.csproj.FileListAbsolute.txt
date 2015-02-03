@@ -28,3 +28,9 @@ F:\南京师范大学\计算机学院\人工智能基础\课程设计\Maze\Maze\
 F:\NanjingNormalUniversity\CS\artificial intelligence\course designing\Maze\Maze\Maze\bin\Debug\Maze.exe.config
 F:\NanjingNormalUniversity\CS\artificial intelligence\course designing\Maze\Maze\Maze\obj\Debug\Maze.exe
 F:\NanjingNormalUniversity\CS\artificial intelligence\course designing\Maze\Maze\Maze\obj\Debug\Maze.pdb
+F:\NanjingNormalUniversity\CS\artificial intelligence\course designing\Maze\Maze\Maze\bin\Debug\Maze.exe
+F:\NanjingNormalUniversity\CS\artificial intelligence\course designing\Maze\Maze\Maze\bin\Debug\Maze.pdb
+F:\NanjingNormalUniversity\CS\artificial intelligence\course designing\Maze\Maze\Maze\obj\Debug\Maze.Maze.resources
+F:\NanjingNormalUniversity\CS\artificial intelligence\course designing\Maze\Maze\Maze\obj\Debug\Maze.Properties.Resources.resources
+F:\NanjingNormalUniversity\CS\artificial intelligence\course designing\Maze\Maze\Maze\obj\Debug\Maze.csproj.GenerateResource.Cache
+F:\NanjingNormalUniversity\CS\artificial intelligence\course designing\Maze\Maze\Maze\obj\Debug\Maze.csprojResolveAssemblyReference.cache

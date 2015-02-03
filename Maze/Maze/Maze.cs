@@ -13,18 +13,18 @@ namespace Maze
     public partial class Maze : Form
     {
         #region params to generate a maze
-        private static int N = 17;//scale of maze
+        private static int N = 12;//scale of maze
         private bool[,] map = new bool[N * N, 5];//logic map of maze
         private bool[,] choice = new bool[N * N, 5];// ways for a unit to choose
         private Point[,] mapPoint = new Point[N + 1, N + 1];//physic map of maze
-        private Stack<int> gStack = new Stack<int> { };//the stack to record the explored units
+        private Stack<int> gStack = new Stack<int>();//the stack to record the explored units
         private int seed = -1;
         private int seedLatch = -1;//if you want to recover from a damaged maze
         #endregion
 
         #region params to explore a maze
         private Point[,] path = new Point[N, N];//the key to the maze
-        private Stack<int> rStack = new Stack<int> { };//the stack to record the explored units
+        private Stack<int> rStack = new Stack<int>();//the stack to save the current path
         #endregion
 
         public Maze()
@@ -173,58 +173,53 @@ namespace Maze
         private void DFS(object sender, EventArgs e)
         {
             rStack.Clear();
-            rStack.Push(-1);//a stupid way to solve the problem at the beginning of the 
-            //recursion but I just don't have any other way at all!
-            explore(0);
-        }
-        private bool explore(int stackTop)
-        {
-            if (stackTop != N * N - 1)
+            //temporary eStack(expandStack) to record which node to be expanded
+            Stack<int> eStack = new Stack<int>();
+            rStack.Push(-N);//we suppose that the "previous unit" before the start unit is -N
+            eStack.Push(0);
+            while (rStack.Peek() != N * N - 1)
             {
-                int temp = 0, i;
-                for (i = 1; i < 5; i++)
+                int now = eStack.Peek();
+                while (now == -1)
                 {
-                    if (map[stackTop, i] == true)
+                    rStack.Pop();
+                    eStack.Pop();
+                    now = eStack.Peek();
+                }
+                eStack.Pop();
+                eStack.Push(-1);
+                for (int i = 1; i < 5; i++)
+                {
+                    if (map[now, i] == true)
                     {
+                        int temp = 0;
                         switch (i)
                         {
                             case 1:
-                                temp = stackTop + 1;
+                                temp = now + 1;
                                 break;
                             case 2:
-                                temp = stackTop + N;
+                                temp = now + N;
                                 break;
                             case 3:
-                                temp = stackTop - 1;
+                                temp = now - 1;
                                 break;
                             case 4:
-                                temp = stackTop - N;
+                                temp = now - N;
                                 break;
                             default: break;
                         }
                         if (temp == rStack.Peek())
                             continue;
-                        else
-                        {
-                            rStack.Push(stackTop);
-                            if (explore(temp) == true)
-                                break;
-                            else
-                                continue;
-                        }
+                        eStack.Push(temp);
                     }
-                    else continue;
                 }
-                if (i == 5)
-                {
-                    rStack.Pop();
-                    return false;
-                }
+                if (eStack.Peek() != -1)
+                    rStack.Push(now);
+                else
+                    eStack.Pop();
             }
-            else
-                rStack.Push(stackTop);
-
-            return true;
+            DrawKey();
         }
 
         private void BFS(object sender, EventArgs e)
@@ -252,7 +247,7 @@ namespace Maze
             Point post;
             int next = 0;
             int x = 0, y = 0;
-            while ((next = rStack.Peek()) != -1)
+            while ((next = rStack.Peek()) != -N)
             {
                 rStack.Pop();
                 x = next / N;
