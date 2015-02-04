@@ -138,7 +138,7 @@ namespace Maze
             seed = -1;
         }
 
-        //to judge how many ways can the unit now to explore
+        //to judge how many ways can the unit now to explore(used in generate alg.)
         private int adjacent(int now)
         {
             int count = 0;
@@ -222,9 +222,85 @@ namespace Maze
             DrawKey();
         }
 
+        public struct Node   //used in BFS 
+        {
+            public Node(int parent, int unit, int parentUnit)
+            {
+                this.parent = parent;
+                this.unit = unit;
+                this.parentUnit = parentUnit;
+            }
+            public int parent;
+            public int unit;
+            public int parentUnit;
+        };
+
         private void BFS(object sender, EventArgs e)
         {
-
+            //temporary oQueue(openQueue) to record which node to be expanded
+            Queue<Node> queue = new Queue<Node>();
+            //temporary cList(closedQueue) to record the expanded nodes
+            System.Collections.ArrayList list = new System.Collections.ArrayList();
+            queue.Enqueue(new Node(0, 0, -N));
+            list.Add(new Node(-1, -N, -1));
+            while (true)
+            {
+                Node node = queue.Peek();
+                list.Add(node);
+                queue.Dequeue();
+                int parent = list.Count - 1;
+                int unit = node.unit;
+                for (int i = 1; i < 5; i++)
+                {
+                    if (map[unit, i] == true)
+                    {
+                        int temp = 0;
+                        switch (i)
+                        {
+                            case 1:
+                                temp = unit + 1;
+                                break;
+                            case 2:
+                                temp = unit + N;
+                                break;
+                            case 3:
+                                temp = unit - 1;
+                                break;
+                            case 4:
+                                temp = unit - N;
+                                break;
+                            default: break;
+                        }
+                        if (temp == node.parentUnit)
+                            continue;
+                        else if (temp == N * N - 1)
+                        {
+                            list.Add(new Node(parent, temp, unit));
+                            goto End;
+                        }
+                        queue.Enqueue(new Node(parent, temp, unit));
+                    }
+                }
+            }
+        End:
+            {
+                rStack.Clear();
+                rStack.Push(-N);
+                Stack<int> tempStack = new Stack<int>();
+                int index=list.Count - 1;
+                while (index > -1)
+                {
+                    Node node = (Node)list[index];
+                    tempStack.Push(node.unit);
+                    index = node.parent;
+                }
+                while (tempStack.Count > 0)
+                {
+                    rStack.Push(tempStack.Peek());
+                    tempStack.Pop();
+                }
+            }
+            DrawKey();
         }
 
         private void A_Star(object sender, EventArgs e)
