@@ -53,7 +53,7 @@ namespace Maze
             }
             else
                 r = new Random(seed);
-            int now = 0;
+            int now = r.Next(0, N * N);
             map[now, 0] = true;
             gStack.Clear();
             gStack.Push(now);
