@@ -34,3 +34,14 @@ F:\NanjingNormalUniversity\CS\artificial intelligence\course designing\Maze\Maze
 F:\NanjingNormalUniversity\CS\artificial intelligence\course designing\Maze\Maze\Maze\obj\Debug\Maze.Properties.Resources.resources
 F:\NanjingNormalUniversity\CS\artificial intelligence\course designing\Maze\Maze\Maze\obj\Debug\Maze.csproj.GenerateResource.Cache
 F:\NanjingNormalUniversity\CS\artificial intelligence\course designing\Maze\Maze\Maze\obj\Debug\Maze.csprojResolveAssemblyReference.cache
+F:\Nanjing Normal University\CS\artificial intelligence\course designing\Maze\Maze\Maze\bin\Debug\Maze.exe.config
+F:\Nanjing Normal University\CS\artificial intelligence\course designing\Maze\Maze\Maze\obj\Debug\Maze.exe
+F:\Nanjing Normal University\CS\artificial intelligence\course designing\Maze\Maze\Maze\obj\Debug\Maze.pdb
+F:\Nanjing Normal University\CS\artificial intelligence\course designing\Maze\Maze\Maze\obj\Debug\Maze.Maze.resources
+F:\Nanjing Normal University\CS\artificial intelligence\course designing\Maze\Maze\Maze\obj\Debug\Maze.Properties.Resources.resources
+F:\Nanjing Normal University\CS\artificial intelligence\course designing\Maze\Maze\Maze\obj\Debug\Maze.csproj.GenerateResource.Cache
+F:\Nanjing Normal University\CS\artificial intelligence\course designing\Maze\Maze\Maze\bin\Debug\Maze.exe
+F:\Nanjing Normal University\CS\artificial intelligence\course designing\Maze\Maze\Maze\bin\Debug\Maze.pdb
+F:\Nanjing Normal University\CS\artificial intelligence\course designing\Maze\Maze\Maze\bin\Debug\PriorityQueue.dll
+F:\Nanjing Normal University\CS\artificial intelligence\course designing\Maze\Maze\Maze\bin\Debug\PriorityQueue.pdb
+F:\Nanjing Normal University\CS\artificial intelligence\course designing\Maze\Maze\Maze\obj\Debug\Maze.csprojResolveAssemblyReference.cache

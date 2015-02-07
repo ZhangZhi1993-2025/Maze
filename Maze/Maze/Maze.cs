@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PriorityQueue;
 
 namespace Maze
 {
@@ -135,6 +136,8 @@ namespace Maze
             //a security measure
             button2.Enabled = true;
             button3.Enabled = true;
+            button4.Enabled = true;
+            button5.Enabled = true;
             seed = -1;
         }
 
@@ -169,7 +172,6 @@ namespace Maze
             return count;
         }
 
-        //alg. to explore the maze
         private void DFS(object sender, EventArgs e)
         {
             rStack.Clear();
@@ -222,17 +224,28 @@ namespace Maze
             DrawKey();
         }
 
-        public struct Node   //used in BFS 
+        //used in BFS and A_Star
+        public struct Node : IComparable<Node>
         {
+            public int CompareTo(Node another)
+            {
+                int length1 = N - this.unit % N;
+                int width1 = N - this.unit / N;
+                int length2 = N - another.unit % N;
+                int width2 = N - another.unit / N;
+                return length1 + width1 - length2 - width2;
+            }
+
             public Node(int parent, int unit, int parentUnit)
             {
                 this.parent = parent;
                 this.unit = unit;
                 this.parentUnit = parentUnit;
             }
+
             public int parent;
             public int unit;
-            public int parentUnit;
+            public int parentUnit;   //trading space for time
         };
 
         private void BFS(object sender, EventArgs e)
@@ -305,7 +318,69 @@ namespace Maze
 
         private void A_Star(object sender, EventArgs e)
         {
-
+            //temporary prioirtyQueue to record which node to be expanded
+            PriorityQueue<Node> queue = new PriorityQueue<Node>();
+            //temporary cList(closedQueue) to record the expanded nodes
+            System.Collections.ArrayList list = new System.Collections.ArrayList();
+            queue.Enqueue(new Node(0, 0, -N));
+            list.Add(new Node(-1, -N, -1));
+            while (true)
+            {
+                Node node = queue.Dequeue();
+                list.Add(node);
+                int parent = list.Count - 1;
+                int unit = node.unit;
+                for (int i = 1; i < 5; i++)
+                {
+                    if (map[unit, i] == true)
+                    {
+                        int temp = 0;
+                        switch (i)
+                        {
+                            case 1:
+                                temp = unit + 1;
+                                break;
+                            case 2:
+                                temp = unit + N;
+                                break;
+                            case 3:
+                                temp = unit - 1;
+                                break;
+                            case 4:
+                                temp = unit - N;
+                                break;
+                            default: break;
+                        }
+                        if (temp == node.parentUnit)
+                            continue;
+                        else if (temp == N * N - 1)
+                        {
+                            list.Add(new Node(parent, temp, unit));
+                            goto End;
+                        }
+                        queue.Enqueue(new Node(parent, temp, unit));
+                    }
+                }
+            }
+        End:
+            {
+                rStack.Clear();
+                rStack.Push(-N);
+                Stack<int> tempStack = new Stack<int>();
+                int index = list.Count - 1;
+                while (index > -1)
+                {
+                    Node node = (Node)list[index];
+                    tempStack.Push(node.unit);
+                    index = node.parent;
+                }
+                while (tempStack.Count > 0)
+                {
+                    rStack.Push(tempStack.Peek());
+                    tempStack.Pop();
+                }
+            }
+            DrawKey();
         }
 
         //GDI engine: drawing the key to the maze
